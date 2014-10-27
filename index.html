@@ -103,11 +103,12 @@ $('#getghusername').on('click', function(e) {
   }
 
   var commitsNumber=0;
+  var commitsHTML;
+
   function getCommits() {
   	if(repositories.length === 0) { 
-  			commitsNumber=0;
-  			commits = '<p>'+commitsNumber+' commits!</p>'; 
-  			$('#commits').html(commits);	
+  			commitsHTML = '<p>'+commitsNumber+' commits!</p>'; 
+  			$('#commits').html(commitsHTML);	
   		}
           else {
           	$.each(repositories, function(index){
@@ -118,21 +119,21 @@ $('#getghusername').on('click', function(e) {
     					  		commitsNumber += commits[index].contributions;
     					  		}
     					  	});
-    								commits = '<p>'+commitsNumber+' commits!</p>';	
-          					$('#commits').html(commits);
+    								commitsHTML = '<p>'+commitsNumber+' commits!</p>';	
+          					$('#commits').html(commitsHTML);
   							}); 
+          					
           	})
           }
-          
-          
-          
+           
   }
 	
 			$('#ghusername').val('').attr('placeholder','GitHub Username')
 
 });
  
-$(document).on('click', '#deleteUser', function() {
+$(document).on('click', '#deleteUser', function(e) {
+		e.preventDefault();
 		$(this).closest('article').remove();
 	});
 
