@@ -1,4 +1,4 @@
-<DOCTYPE html>
+<!-- <DOCTYPE html> -->
 <html>
 
 <head>
@@ -13,30 +13,41 @@
 			Enter GitHub Username:
 		</h1>
 		<input type='text' id='ghusername' placeholder='GitHub Username'/>
-		<a href='#' id='getghusername'>Show me the money!</a>
+		<a href='#' id='getghusername' data-height='50'>Show me the money!</a>
 	</header>
 
 	<section id='profile'></section>
 
 	<template id='newtemplate'>
+	<style>
+	</style>
 		<article>
 
-			<header>
+			<header id='infocard'>
 					<img src='{{avatar_url}}'/>
-				  <h1>{{name}}</h1>
 		      <h2>{{login}}</h2>
-		   </header>
-      <p>
-        <strong id='followers'>{{followers}} Followers</strong>
-        <strong id='repos'>{{public_repos}} Public Repos</strong>
-      </p>
+				  <h3>{{name}}</h3>
+		  </header>
+      <aside id='keyinfo'>
+	      <p>
+	        <strong id='followers'>{{followers}} Followers</strong>
+	      </p>
+	      <br/>
+	      <p>
+	        <strong id='repos'>{{public_repos}} Public Repos</strong>
+	      </p>
+	      <br/>
+	      <aside id='commits'>
+	      </aside>
+      </aside>
+      
       <aside id='reposlist'>
       </aside>
-      <aside id='commits'>
-      </aside>
+      <aside id='delete'>
       <p>
       <a href='#' id='deleteUser'>Delete</a>
       </p>
+      <aside>
   	</article>
 	</template>
 
@@ -81,7 +92,7 @@ $('#getghusername').on('click', function(e) {
   		$('#reposlist').html(reposhtml);
   		}
           else { 
-            reposhtml = '<p><strong>Repos List:</strong></p> <ul>';
+            reposhtml = '<p><strong>Repos List:</strong></p><br/> <ul>';
             $.each(repositories, function(index) {
               reposhtml = reposhtml + '<li><a href="'+repositories[index].html_url+'" target="_blank">'+repositories[index].name + '</a></li>';
             });

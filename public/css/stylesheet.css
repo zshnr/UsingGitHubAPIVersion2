@@ -1,8 +1,9 @@
 header#headeruser {
 	display: flex;
-	margin: 10px;
-	border-bottom: 1px dashed;
+	border-bottom: 1px solid #e5e5e5;
 	height: 50px;
+	background-color: #f5f5f5;
+	font-family: 'Helvetica Neue', Helvetica, sans-serif;
 }
 
 h1 {
@@ -17,22 +18,104 @@ h1 {
 	margin: auto 10px;
 }
 
-#ghusername:focus {
+/*#ghusername:focus {
 	color: DarkSalmon;
-}
+}*/
 
 #getghusername {
 	color: black;
 	font-size: 1em;
 	text-decoration: none;
-	border: 1px solid;
-	background: DarkSalmon;
+	border: 1px solid #e5e5e5;
+	border-radius: 4px;
+	background: #FFF9E9;
 	text-align: center;
 	height: 20px;
 	margin: auto 10px;
+	font-family: 'Helvetica Neue', Helvetica, sans-serif;
+	padding: 5px;
+	font-weight: bold;
+}
+
+article {
+	display: flex;
+}
+
+header#infocard {
+	border: 1px solid #e5e5e5;
+	min-width: 240px;
+	height: 240px;
+	padding: 10px;
+	margin: 10px;
+	text-align: center;
+	font-family: 'Helvetica Neue', Helvetica, sans-serif;
+}
+
+h2 {
+	font-size: 1.5em;
+}
+
+h3 {
+	font-style: italic;
+}
+
+img {
+	height: 200px;
+	width: 200px;
+	border-radius: 5px;
+	border: 1px solid #e5e5e5;	
+}
+
+aside#keyinfo {
+	border: 1px solid #e5e5e5;
+	min-width: 120px;
+	height: 240px;
+	padding: 10px;
+	margin: 10px;
+	text-align: center;
+	font-family: 'Helvetica Neue', Helvetica, sans-serif;
+}
+
+aside#reposlist {
+	border: 1px solid #e5e5e5;
+	min-width: 480px;
+	max-width: 600px;
+	height: 240px;
+	padding: 10px;
+	margin: 10px;
+	text-align: center;
+	font-family: 'Helvetica Neue', Helvetica, sans-serif;
 }
 
 li {
-	display: inline;
-	margin: 5px;
+	display: inline-block;
+	margin: 3px;
+	border: 1px solid #e5e5e5;
+	border-radius: 3px;
+	padding: 2px;
+	background-color: #F5f5f5;
+}
+
+li a {
+	text-decoration: none;
+	color: black;
+}
+
+li a:visited {
+	text-decoration: none;
+	color: black;
+}
+
+li:hover{
+	background-color: #FFF9E9;
+}
+
+aside#delete {
+	border: 1px solid #e5e5e5;
+	min-width: 60px;
+	height: 20px;
+	padding: 5px;
+	margin: 10px;
+	text-align: center;
+	font-family: 'Helvetica Neue', Helvetica, sans-serif;
 }
