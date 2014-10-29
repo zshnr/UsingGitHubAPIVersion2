@@ -32,6 +32,8 @@ HTML, CSS, jQuery, Handlebars
 	  							}); 
 	          	})
 ```
+This is the section of code that allowed me to gain access to an individuals commits. Well, technically I think it may their contributions. This code grabs the API data and then cycles through each repository and grabs the commits data. It then cycles through that data looking for the the total contributions made by that user (as many projects have more than one user commiting to the project).
+The figure this is returning is almost accurate to their GitHub profile but not eaxact. I think there are generally some issues about what counts on this list. GitHub provide more info here: https://help.github.com/articles/why-are-my-contributions-not-showing-up-on-my-profile/
 
 ## Collaborators
 
@@ -43,4 +45,4 @@ None.
 - [ ] I could try and integrate this with Sinatra or Express to get this online
 - [ ] The code could be refactored and cleaned up in some areas
 - [ ] Unable to use Handlebars for all the templating and had to use jQueury.html() for some of this. It would be good to try and find out how Handlebars would be possible for these additions
-- [ ] I would like to be able to enter my Makers Academy Cohort Name and see all 28 of us listed on the page
+- [x] I would like to be able to enter my Makers Academy Cohort Name and see all 28 of us listed on the page. [Working 29/0/14. Requires a delay due to gathering data and loops for repos and commits.]

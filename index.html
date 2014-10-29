@@ -22,7 +22,7 @@
 		<article>
 
 			<header id='infocard'>
-					<img src='{{avatar_url}}'/>
+					<a href='http://www.github.com/{{login}}' target="_blank"><img src='{{avatar_url}}'/></a>
 		      <h2>{{login}}</h2>
 				  <h3>{{name}}</h3>
 		  </header>
@@ -54,6 +54,7 @@
 <script type='text/javascript' src='src/interface.js'></script>
 
 <script>
+
 $('#getghusername').on('click', function(e) {
 	e.preventDefault();
 	var username = $('#ghusername').val();
@@ -62,72 +63,102 @@ $('#getghusername').on('click', function(e) {
 	
 	var ghprofuri = 'https://api.github.com/users/'+username+'?client_id=105a140f1cf546a14c96&client_secret=0720e817925e73b3f387ba2dcbe979b429a88309'
 	var ghrepouri = 'https://api.github.com/users/'+username+'/repos?client_id=105a140f1cf546a14c96&client_secret=0720e817925e73b3f387ba2dcbe979b429a88309'
-
-	$.ajax({
-			url: ghprofuri,
-			type: 'GET',
-			data_type: 'json',
-			success: function(githubProfile){
-	            $('#profile').append(template(githubProfile));
-	          },
-	    error: function() { alert("Profile not found!"); } 
-	  });
-
-		var repositories;
-		var reposhtml;
-		var commits;
-		
-	  
-	  $.getJSON(ghrepouri, function(json){
-	     repositories = json;  
-	     createReposContent();
-	     var temp = getCommits();                
-	  });          
-
-	  function createReposContent() {
-	  	if(repositories.length === 0) { 
-	  		reposhtml = '<p>No repos!</p>'; 
-	  		$('#reposlist').html(reposhtml);
-	  		}
-	          else { 
-	            reposhtml = '<p><strong>Repos List:</strong></p><br/> <ul>';
-	            $.each(repositories, function(index) {
-	              reposhtml = reposhtml + '<li><a href="'+repositories[index].html_url+'" target="_blank">'+repositories[index].name + '</a></li>';
-	            });
-	            reposhtml = reposhtml + '</ul>';
-	            $('#'+username+'repos').html(reposhtml);
-	          }
-	          
-	  }
-
-	  var commitsNumber=0;
-	  var commitsHTML;
-
-	  function getCommits() {
-	  	if(repositories.length === 0) { 
-	  			commitsHTML = '<p>No commits!</p>'; 
-	  			$('#'+username+'commits').html(commitsHTML);	
-	  		}
-	          else {
-	          	$.each(repositories, function(index){
-								$.getJSON('https://api.github.com/repos/'+username+'/'+repositories[index].name+'/contributors?client_id=105a140f1cf546a14c96&client_secret=0720e817925e73b3f387ba2dcbe979b429a88309', function(jsoncom){
-	    					  	commits = jsoncom;                  
-	    					 	 	$.each(commits, function(index){
-	    					  		if(commits[index].login === username) {
-	    					  		commitsNumber += commits[index].contributions;
-	    					  		}
-	    					  	});
-	    								commitsHTML = '<p>'+commitsNumber+' commits!</p>';	
-	          					$('#'+username+'commits').html(commitsHTML);
-	  							}); 
-	          	})
-	          					
-	          }
-	  }
 	
-			$('#ghusername').val('').attr('placeholder','GitHub Username')	
+	if(username === 'September Cohort'){
+		nameList = ['ananogal', 'alexfakhri', 'AndrewHarrison', 'andrewhercules', 'annaschechter', 'barr-code', 'bmordan', 'camillavk', 'craigh44', 'danjocutler', 'deniseyu', 'elenagarrone', 'EllaNancyFay', 'fadieh', 'galicians', 'HatStephens', 'jamesascarter', 'karinnielsen', 'MadameSardine', 'mala23', 'NicolePell', 'SBLLB', 'Schlap', 'Scully87', 'slstevens', 'snozza', 'yvettecook', 'zrasool88']
+													
+													//http://stackoverflow.com/questions/3583724/how-do-i-add-a-delay-in-a-javascript-loop
+		var i = 0;                     //  set your counter to 0
 
+		function myLoop () {           //  create a loop function
+   		setTimeout(function () {    //  call a 3s setTimeout when the loop is called
+	      username = nameList[i];
+				ghprofuri = 'https://api.github.com/users/'+username+'?client_id=105a140f1cf546a14c96&client_secret=0720e817925e73b3f387ba2dcbe979b429a88309'
+				ghrepouri = 'https://api.github.com/users/'+username+'/repos?client_id=105a140f1cf546a14c96&client_secret=0720e817925e73b3f387ba2dcbe979b429a88309'
+				getData();	    		      		//  your code here
+	      i++;                     			//  increment the counter
+	      if (i < nameList.length) {    //  if the counter < 10, call the loop function
+	         myLoop();            		 //  ..  again which will trigger another 
+	      }                        			//  ..  setTimeout()
+	   }, 2000)
+		}
+
+		myLoop();                      //  start the loop
+
+	}
+
+	else{
+		getData();
+	}
+	$('#ghusername').val('').attr('placeholder','GitHub Username (case sensitive)')
+
+
+	function getData(){
+		$.ajax({
+				url: ghprofuri,
+				type: 'GET',
+				data_type: 'json',
+				success: function(githubProfile){
+		            $('#profile').append(template(githubProfile));
+		          },
+		    error: function() { alert("Profile not found!"); } 
+		  });
+
+			var repositories;
+			var reposhtml;
+			var commits;
+			
+		  
+		  $.getJSON(ghrepouri, function(json){
+		     repositories = json;  
+		     createReposContent();
+		     var temp = getCommits();                
+		  });          
+
+		  function createReposContent() {
+		  	if(repositories.length === 0) { 
+		  		reposhtml = '<p>No repos!</p>'; 
+		  		$('#reposlist').html(reposhtml);
+		  		}
+		          else { 
+		            reposhtml = '<p><strong>Repos List:</strong></p><br/> <ul>';
+		            $.each(repositories, function(index) {
+		              reposhtml = reposhtml + '<li><a href="'+repositories[index].html_url+'" target="_blank">'+repositories[index].name + '</a></li>';
+		            });
+		            reposhtml = reposhtml + '</ul>';
+		            $('#'+username+'repos').html(reposhtml);
+		          }
+		          
+		  }
+
+		  var commitsNumber=0;
+		  var commitsHTML;
+
+		  function getCommits() {
+		  	if(repositories.length === 0) { 
+		  			commitsHTML = '<p>No commits!</p>'; 
+		  			$('#'+username+'commits').html(commitsHTML);	
+		  		}
+		          else {
+		          	$.each(repositories, function(index){
+									$.getJSON('https://api.github.com/repos/'+username+'/'+repositories[index].name+'/contributors?client_id=105a140f1cf546a14c96&client_secret=0720e817925e73b3f387ba2dcbe979b429a88309', function(jsoncom){
+		    					  	commits = jsoncom;                  
+		    					 	 	$.each(commits, function(index){
+		    					  		if(commits[index].login === username) {
+		    					  		commitsNumber += commits[index].contributions;
+		    					  		}
+		    					  	});
+		    								commitsHTML = '<p>'+commitsNumber+' commits!</p>';	
+		          					$('#'+username+'commits').html(commitsHTML);
+		  							}); 
+		          	})
+		          					
+		          }
+		  }
+	}
 });
+
+
  
 $(document).on('click', '#deleteUser', function(e) {
 		e.preventDefault();
