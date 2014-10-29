@@ -32,8 +32,8 @@ HTML, CSS, jQuery, Handlebars
 	  							}); 
 	          	})
 ```
-This is the section of code that allowed me to gain access to an individuals commits. Well, technically I think it may their contributions. This code grabs the API data and then cycles through each repository and grabs the commits data. It then cycles through that data looking for the the total contributions made by that user (as many projects have more than one user commiting to the project).
-The figure this is returning is almost accurate to their GitHub profile but not eaxact. I think there are generally some issues about what counts on this list. GitHub provide more info here: https://help.github.com/articles/why-are-my-contributions-not-showing-up-on-my-profile/
+This is the section of code that allowed me to gain access to an individuals commits. Well, technically I think it may be their contributions. This code grabs the API data and then cycles through each repository and grabs the commits data. It then cycles through that data looking for the total contributions made by that user (as many projects have more than one user commiting to the project).
+The figure this is returning is almost accurate to their GitHub profile but not eaxact. I think there are generally some issues about what counts on this list. Plus it will not count commits made to another user's repositories. GitHub provide more info here: https://help.github.com/articles/why-are-my-contributions-not-showing-up-on-my-profile/
 
 ## Collaborators
 
