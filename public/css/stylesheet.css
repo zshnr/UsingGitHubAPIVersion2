@@ -45,7 +45,7 @@ article {
 header#infocard {
 	border: 1px solid #e5e5e5;
 	min-width: 240px;
-	height: 240px;
+	min-height: 240px;
 	padding: 10px;
 	margin: 10px;
 	text-align: center;
@@ -70,18 +70,18 @@ img {
 aside#keyinfo {
 	border: 1px solid #e5e5e5;
 	min-width: 120px;
-	height: 240px;
+	min-height: 240px;
 	padding: 10px;
 	margin: 10px;
 	text-align: center;
 	font-family: 'Helvetica Neue', Helvetica, sans-serif;
 }
 
-aside#reposlist {
+aside.reposlist {
 	border: 1px solid #e5e5e5;
 	min-width: 480px;
 	max-width: 600px;
-	height: 240px;
+	min-height: 240px;
 	padding: 10px;
 	margin: 10px;
 	text-align: center;

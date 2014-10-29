@@ -12,15 +12,13 @@
 		<h1>
 			Enter GitHub Username:
 		</h1>
-		<input type='text' id='ghusername' placeholder='GitHub Username'/>
+		<input type='text' id='ghusername' placeholder='GitHub Username (case sensitive)'/>
 		<a href='#' id='getghusername' data-height='50'>Show me the money!</a>
 	</header>
 
 	<section id='profile'></section>
 
 	<template id='newtemplate'>
-	<style>
-	</style>
 		<article>
 
 			<header id='infocard'>
@@ -37,11 +35,11 @@
 	        <strong id='repos'>{{public_repos}} Public Repos</strong>
 	      </p>
 	      <br/>
-	      <aside id='commits'>
+	      <aside id='{{login}}commits' class='commits'>
 	      </aside>
       </aside>
       
-      <aside id='reposlist'>
+      <aside id='{{login}}repos' class='reposlist'>
       </aside>
       <aside id='delete'>
       <p>
@@ -61,6 +59,7 @@ $('#getghusername').on('click', function(e) {
 	var username = $('#ghusername').val();
 	var source = $('#newtemplate').html();    // this is the id of the <template> 
 	var template = Handlebars.compile(source);
+	
 	var ghprofuri = 'https://api.github.com/users/'+username+'?client_id=105a140f1cf546a14c96&client_secret=0720e817925e73b3f387ba2dcbe979b429a88309'
 	var ghrepouri = 'https://api.github.com/users/'+username+'/repos?client_id=105a140f1cf546a14c96&client_secret=0720e817925e73b3f387ba2dcbe979b429a88309'
 
@@ -74,61 +73,59 @@ $('#getghusername').on('click', function(e) {
 	    error: function() { alert("Profile not found!"); } 
 	  });
 
-	var repositories;
-	var reposhtml;
-	var commits;
+		var repositories;
+		var reposhtml;
+		var commits;
+		
+	  
+	  $.getJSON(ghrepouri, function(json){
+	     repositories = json;  
+	     createReposContent();
+	     var temp = getCommits();                
+	  });          
+
+	  function createReposContent() {
+	  	if(repositories.length === 0) { 
+	  		reposhtml = '<p>No repos!</p>'; 
+	  		$('#reposlist').html(reposhtml);
+	  		}
+	          else { 
+	            reposhtml = '<p><strong>Repos List:</strong></p><br/> <ul>';
+	            $.each(repositories, function(index) {
+	              reposhtml = reposhtml + '<li><a href="'+repositories[index].html_url+'" target="_blank">'+repositories[index].name + '</a></li>';
+	            });
+	            reposhtml = reposhtml + '</ul>';
+	            $('#'+username+'repos').html(reposhtml);
+	          }
+	          
+	  }
+
+	  var commitsNumber=0;
+	  var commitsHTML;
+
+	  function getCommits() {
+	  	if(repositories.length === 0) { 
+	  			commitsHTML = '<p>No commits!</p>'; 
+	  			$('#'+username+'commits').html(commitsHTML);	
+	  		}
+	          else {
+	          	$.each(repositories, function(index){
+								$.getJSON('https://api.github.com/repos/'+username+'/'+repositories[index].name+'/contributors?client_id=105a140f1cf546a14c96&client_secret=0720e817925e73b3f387ba2dcbe979b429a88309', function(jsoncom){
+	    					  	commits = jsoncom;                  
+	    					 	 	$.each(commits, function(index){
+	    					  		if(commits[index].login === username) {
+	    					  		commitsNumber += commits[index].contributions;
+	    					  		}
+	    					  	});
+	    								commitsHTML = '<p>'+commitsNumber+' commits!</p>';	
+	          					$('#'+username+'commits').html(commitsHTML);
+	  							}); 
+	          	})
+	          					
+	          }
+	  }
 	
-  
-  $.getJSON(ghrepouri, function(json){
-     repositories = json;  
-     createReposContent();
-     getCommits();                
-  });          
-
-  function createReposContent() {
-  	if(repositories.length === 0) { 
-  		// $('#profile').append(template(repositories));
-  		reposhtml = '<p>No repos!</p>'; 
-  		$('#reposlist').html(reposhtml);
-  		}
-          else { 
-            reposhtml = '<p><strong>Repos List:</strong></p><br/> <ul>';
-            $.each(repositories, function(index) {
-              reposhtml = reposhtml + '<li><a href="'+repositories[index].html_url+'" target="_blank">'+repositories[index].name + '</a></li>';
-            });
-            reposhtml = reposhtml + '</ul>';
-            $('#reposlist').html(reposhtml);
-          }
-          
-  }
-
-  var commitsNumber=0;
-  var commitsHTML;
-
-  function getCommits() {
-  	if(repositories.length === 0) { 
-  			commitsHTML = '<p>'+commitsNumber+' commits!</p>'; 
-  			$('#commits').html(commitsHTML);	
-  		}
-          else {
-          	$.each(repositories, function(index){
-							$.getJSON('https://api.github.com/repos/'+username+'/'+repositories[index].name+'/contributors?client_id=105a140f1cf546a14c96&client_secret=0720e817925e73b3f387ba2dcbe979b429a88309', function(jsoncom){
-    					  commits = jsoncom;                  
-    					 	 	$.each(commits, function(index){
-    					  		if(commits[index].login === username) {
-    					  		commitsNumber += commits[index].contributions;
-    					  		}
-    					  	});
-    								commitsHTML = '<p>'+commitsNumber+' commits!</p>';	
-          					$('#commits').html(commitsHTML);
-  							}); 
-          					
-          	})
-          }
-           
-  }
-	
-			$('#ghusername').val('').attr('placeholder','GitHub Username')
+			$('#ghusername').val('').attr('placeholder','GitHub Username')	
 
 });
  
