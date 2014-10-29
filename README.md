@@ -20,7 +20,7 @@ HTML, CSS, jQuery, Handlebars
 
 ```
  $.each(repositories, function(index){
-								$.getJSON('https://api.github.com/repos/'+username+'/'+repositories[index].name+'/contributors?client_id=105a140f1cf546a14c96&client_secret=0720e817925e73b3f387ba2dcbe979b429a88309', function(jsoncom){
+								$.getJSON('https://api.github.com/repos/'+username+'/'+repositories[index].name+'/contributors', function(jsoncom){
 	    					  commits = jsoncom;                  
 	    					 	 	$.each(commits, function(index){
 	    					  		if(commits[index].login === username) {
